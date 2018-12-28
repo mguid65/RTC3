@@ -60,7 +60,7 @@ namespace RTC
 					if (!File.Exists(RTC_Core.rtcDir + "\\SKS\\" + cmd.romFilename))
 						File.WriteAllBytes(RTC_Core.rtcDir + "\\SKS\\" + cmd.romFilename, cmd.romData);
 
-					cmd.stashkey.RomFilename = RTC_Core.rtcDir + "\\SKS\\" + RTC_Extensions.getShortFilenameFromPath(cmd.romFilename);
+					cmd.stashkey.RomFilename = RTC_Core.rtcDir + "\\SKS\\" + Path.GetFileName(cmd.romFilename);
 
 					cmd.stashkey.DeployState();
 
@@ -71,7 +71,7 @@ namespace RTC
 				case CommandType.PULLROM:
 					cmdBack = new RTC_Command(CommandType.PUSHROM)
 					{
-						romFilename = RTC_Extensions.getShortFilenameFromPath(RTC_Hooks.BIZHAWK_GET_CURRENTLYOPENEDROM())
+						romFilename = Path.GetFileName(RTC_Hooks.BIZHAWK_GET_CURRENTLYOPENEDROM())
 					};
 
 					if (!PeerHasRom(cmdBack.romFilename))
@@ -82,7 +82,7 @@ namespace RTC
 				case CommandType.PUSHROM:
 					if (cmd.romData != null)
 					{
-						cmd.romFilename = RTC_Extensions.getShortFilenameFromPath(cmd.romFilename);
+						cmd.romFilename = Path.GetFileName(cmd.romFilename);
 						if (!File.Exists(RTC_Core.rtcDir + "\\MP\\" + cmd.romFilename))
 							File.WriteAllBytes(RTC_Core.rtcDir + "\\MP\\" + cmd.romFilename, cmd.romData);
 					}
@@ -114,7 +114,7 @@ namespace RTC
 
 					cmdBack = new RTC_Command(CommandType.PUSHSWAPSTATE)
 					{
-						romFilename = RTC_Extensions.getShortFilenameFromPath(RTC_Hooks.BIZHAWK_GET_CURRENTLYOPENEDROM())
+						romFilename = Path.GetFileName(RTC_Hooks.BIZHAWK_GET_CURRENTLYOPENEDROM())
 					};
 
 					if (!PeerHasRom(cmdBack.romFilename))
@@ -124,7 +124,7 @@ namespace RTC
 					cmdBack.stashkey = sk_PULLSWAPSTATE;
 					sk_PULLSWAPSTATE.EmbedState();
 
-					cmd.romFilename = RTC_Extensions.getShortFilenameFromPath(cmd.romFilename);
+					cmd.romFilename = Path.GetFileName(cmd.romFilename);
 
 					if (!File.Exists(RTC_Core.rtcDir + "\\MP\\" + cmd.romFilename))
 						File.WriteAllBytes(RTC_Core.rtcDir + "\\MP\\" + cmd.romFilename, cmd.romData);
@@ -140,7 +140,7 @@ namespace RTC
 
 				case CommandType.PUSHSWAPSTATE:
 
-					cmd.romFilename = RTC_Extensions.getShortFilenameFromPath(cmd.romFilename);
+					cmd.romFilename = Path.GetFileName(cmd.romFilename);
 
 					if (cmd.romData != null)
 						if (!File.Exists(RTC_Core.rtcDir + "\\MP\\" + cmd.romFilename))
@@ -845,7 +845,7 @@ namespace RTC
 
 			RTC_Command cmd = new RTC_Command(CommandType.STASHKEY)
 			{
-				romFilename = RTC_Extensions.getShortFilenameFromPath(RTC_Hooks.BIZHAWK_GET_CURRENTLYOPENEDROM())
+				romFilename = Path.GetFileName(RTC_Hooks.BIZHAWK_GET_CURRENTLYOPENEDROM())
 			};
 
 			if (!PeerHasRom(cmd.romFilename))

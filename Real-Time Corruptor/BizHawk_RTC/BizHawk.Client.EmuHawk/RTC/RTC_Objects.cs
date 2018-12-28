@@ -97,7 +97,7 @@ namespace RTC
 
 					if (key.RomFilename.ToUpper().Contains(".CUE"))
 					{
-						string cueFolder = RTC_Extensions.getLongDirectoryFromPath(key.RomFilename);
+						string cueFolder = Path.GetDirectoryName(key.RomFilename);
 						string[] cueLines = File.ReadAllLines(key.RomFilename);
 						List<string> binFiles = new List<string>();
 
@@ -117,11 +117,14 @@ namespace RTC
 					{
 						List<string> binFiles = new List<string>();
 
-						if (File.Exists(RTC_Extensions.removeFileExtension(key.RomFilename) + ".sub"))
-							binFiles.Add(RTC_Extensions.removeFileExtension(key.RomFilename) + ".sub");
-
-						if (File.Exists(RTC_Extensions.removeFileExtension(key.RomFilename) + ".img"))
-							binFiles.Add(RTC_Extensions.removeFileExtension(key.RomFilename) + ".img");
+						//if (File.Exists(RTC_Extensions.removeFileExtension(key.RomFilename) + ".sub"))
+						//	binFiles.Add(RTC_Extensions.removeFileExtension(key.RomFilename) + ".sub");
+						if (File.Exists(Path.GetDirectoryName(key.RomFilename) + "\\" + Path.GetFileNameWithoutExtension(key.RomFilename) + ".sub"))
+							binFiles.Add(Path.GetDirectoryName(key.RomFilename) + "\\" + Path.GetFileNameWithoutExtension(key.RomFilename) + ".sub");
+						//if (File.Exists(RTC_Extensions.removeFileExtension(key.RomFilename) + ".img"))
+						//	binFiles.Add(RTC_Extensions.removeFileExtension(key.RomFilename) + ".img");
+						if (File.Exists(Path.GetDirectoryName(key.RomFilename) + "\\" + Path.GetFileNameWithoutExtension(key.RomFilename) + ".img"))
+							binFiles.Add(Path.GetDirectoryName(key.RomFilename) + "\\" + Path.GetFileNameWithoutExtension(key.RomFilename) + ".img");
 
 						allRoms.AddRange(binFiles);
 					}
@@ -161,7 +164,7 @@ namespace RTC
 
 			foreach (StashKey sk in sks.StashKeys)
 			{
-				sk.RomShortFilename = RTC_Extensions.getShortFilenameFromPath(sk.RomFilename);
+				sk.RomShortFilename = Path.GetFileName(sk.RomFilename);
 				sk.RomFilename = RTC_Core.workingDir + "\\SKS\\" + sk.RomShortFilename;
 
 				sk.StateLocation = StashKeySavestateLocation.SKS;

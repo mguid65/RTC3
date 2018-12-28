@@ -183,7 +183,7 @@ namespace RTC
 
 			string uppercaseFilename = GlobalWin.MainForm.CurrentlyOpenRom.ToUpper();
 			if (S.GET<RTC_GlitchHarvester_Form>().Visible && (uppercaseFilename.Contains(".ZIP") || uppercaseFilename.Contains(".7Z")))
-				MessageBox.Show($"The rom {RTC_Extensions.getShortFilenameFromPath(uppercaseFilename)} is in an archive and can't be added to a Stockpile");
+				MessageBox.Show($"The rom {Path.GetFileName(uppercaseFilename)} is in an archive and can't be added to a Stockpile");
 
 			//Load Game vars into RTC_Core
 			PathEntry pathEntry = Global.Config.PathEntries[Global.Game.System, "Savestates"] ??
